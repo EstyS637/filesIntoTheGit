@@ -11,5 +11,9 @@ namespace ex1.Repositories
         void DeleteTaskById(int id);
         void UpdateTask(Tasks task);
         List<Tasks> GetTasksOfUserByUserName(string UserName);
+        void logIntoDB(string message);
+
+
+
     }
 }

@@ -2,8 +2,10 @@ using ex1.Repositories;
 using ex1.Services;
 using ex2.Repositories;
 using ex2.Services;
+using ex2.Services.Logger;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using TasksApi.Services.Logger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,15 @@ builder.Services.AddScoped<IServiceWithAdo, ServiceWithAdo>();
 builder.Services.AddDbContext<TasksdbContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddScoped<ILoggerService, ConsoleLoggerService>();
+
+builder.Services.AddScoped<FileLoggerService>(provider =>
+    new FileLoggerService("M:\\WEB API\\text1.txt")
+);
+builder.Services.AddScoped<DBLoggerService>();
+
+builder.Services.AddScoped<TasksApi.Services.Logger.LoggerFactory>();
 
 
 // Add Swagger services to the container.
@@ -39,6 +50,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
