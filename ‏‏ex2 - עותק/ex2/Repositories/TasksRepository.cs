@@ -13,7 +13,7 @@ namespace ex1.Repositories
 {
     public class TasksRepository : ITasksRepository
     {
-        private readonly DBLoggerService _dBLoggerService;
+
         private string _filePath = "tasks.json";
         private readonly TasksdbContext _context;
         private readonly TasksApi.Services.Logger.LoggerFactory loggerFactory;
@@ -23,10 +23,9 @@ namespace ex1.Repositories
 
 
 
-        public TasksRepository(TasksdbContext context, DBLoggerService dBLoggerService, TasksApi.Services.Logger.LoggerFactory loggerFactory1)
+        public TasksRepository(TasksdbContext context,  TasksApi.Services.Logger.LoggerFactory loggerFactory1)
         {
             _context = context;
-            _dBLoggerService = dBLoggerService;
             loggerFactory = loggerFactory1;
 
         }
@@ -98,6 +97,7 @@ namespace ex1.Repositories
             newMessage.Description = message;
             newMessage.Update_Date = DateTime.Now;
             _context.Messages.Add(newMessage);
+            _context.SaveChanges();
         }
 
 
